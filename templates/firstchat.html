@@ -12,19 +12,6 @@
         </div>
         <div class='chatcontainer'>
             <div id='thebox' class='chatbox'>
-                <div class='monologue'>
-                    <div class='username'>User76:</div>
-                    <div class='usertext'><p>I think blah blah is super important.</p></div>
-                </div>
-                <div class='monologue'>
-                    <div class='username'>User72:</div>
-                    <div class='usertext'><p>I think blah blah is super UNimportant.</p></div>
-                </div>
-                <div class='monologue'>
-                    <div class='username'>User76:</div>
-                    <div class='usertext'><p>I think blah blah is super important, so much so that I'm writing lines and lines and lines and lines and lines and lines and lines and lines and lines and lines and lines and lines and lines and lines about it.</p>
-                    <p>And here's another thought!</p></div>
-                </div>
             </div>
         </div>
         <div class='footer'>
@@ -42,6 +29,7 @@
         <script>
             console.log( "Script starting!" );
             var usernum;
+            var most_recent_speaker = '';
 
             if (!Date.now) {
                 console.log( "Writing Date.now function" );
@@ -51,20 +39,41 @@
                 console.log( "Date.now found!" );
             }
 
-            function addChat( newHTML ) {
-                uts = document.getElementsByClassName('usertext')
-                uts.item(uts.length - 1).innerHTML += newHTML;
+            function addChat( chats ) {
+                if (chats.length > 0){
+                    var allchats = [];
+                    var chathtml = $('div.chatbox').html();
+                    var chatsplit = chats.split('\n').slice(0, -1);
+                    for (var c in chatsplit) {
+                        var thepush = chatsplit[c].split('\t');
+                        allchats.push(thepush);
+                    }
+                    if (allchats[0][0] === most_recent_speaker) {
+                        chathtml = chathtml.slice(0, -12);
+                    }
+                    for (var c in allchats) {
+                        thisnewchat = "<p>" + allchats[c][1] + "</p>"
+                        if (allchats[c][0] != most_recent_speaker) {
+                            thisnewchat = "</div></div><div class='monologue'><div class='username'>"  
+                            + allchats[c][0] + ":</div><div class='usertext'>" + thisnewchat;
+                        }
+                        chathtml += thisnewchat;
+                        most_recent_speaker = allchats[c][0];
+                    }
+                    chathtml += "</div></div>"
+                    $('div.chatbox').html(chathtml);
+                }
             }
 
             function checknew() {
                 $.ajax({
                     url: "getnew",
                     data: 'user=' + usernum,
-                    dataType: "html",
+                    dataType: "text",
                     success: addChat,
                     type: 'POST',
                     error: function( xhr, status, errorThrown ) {
-                        alert( "Sorry, there was a problem!" );
+                        console.log( "Sorry, there was a problem!" );
                         console.log( "Error: " + errorThrown );
                         console.log( "Status: " + status );
                         console.dir( xhr );
@@ -73,6 +82,8 @@
                         console.log( "The request is complete!" );
                     }
                 });
+                console.log($('div.chatbox').scrollTop());
+                $('div.chatbox').scrollTop($('div.chatbox').prop('scrollHeight'));
             }
 
             function aftersend(response) {
