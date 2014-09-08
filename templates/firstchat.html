@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='{{ url_for('static', filename='chatroom.css') }}'>
+        <title>Roundtable</title>
+    </head>
+    <body>
+        <div class='header'>
+            <h1>Roundtable Chat</h1>
+            <p>(title courtesy of Adam Watters)</p>
+            <h3>As it please you, mightest thou print thy thoughts in letters below.</h3>
+        </div>
+        <div class='chatcontainer'>
+            <div id='thebox' class='chatbox'>
+                <div class='monologue'>
+                    <div class='username'>User76:</div>
+                    <div class='usertext'><p>I think blah blah is super important.</p></div>
+                </div>
+                <div class='monologue'>
+                    <div class='username'>User72:</div>
+                    <div class='usertext'><p>I think blah blah is super UNimportant.</p></div>
+                </div>
+                <div class='monologue'>
+                    <div class='username'>User76:</div>
+                    <div class='usertext'><p>I think blah blah is super important, so much so that I'm writing lines and lines and lines and lines and lines and lines and lines and lines and lines and lines and lines and lines and lines and lines about it.</p>
+                    <p>And here's another thought!</p></div>
+                </div>
+            </div>
+        </div>
+        <div class='footer'>
+            <div class='inputrow'>
+                <form id='theform'>
+                    <input class='inputbox' id='input' type='text' name='input' placeholder='Would that thou sing thy songs right here'>
+                    <button type='button' name='submit' onclick='sendchat()'>
+                        <div class='submitbutton'>Zounds!</div>
+                    </button>
+                </form>
+            </div>
+            <p>Forsooth, some undertext mayhap should inhabit this place.</p>
+        </div>
+        <script src='{{ url_for('static', filename='jquery-1.11.1.js') }}'></script>
+        <script>
+            console.log( "Script starting!" );
+            var usernum;
+
+            if (!Date.now) {
+                console.log( "Writing Date.now function" );
+                Date.now = function() { return new Date().getTime(); };
+            }
+            else {
+                console.log( "Date.now found!" );
+            }
+
+            function addChat( newHTML ) {
+                uts = document.getElementsByClassName('usertext')
+                uts.item(uts.length - 1).innerHTML += newHTML;
+            }
+
+            function checknew() {
+                $.ajax({
+                    url: "getnew",
+                    data: 'user=' + usernum,
+                    dataType: "html",
+                    success: addChat,
+                    type: 'POST',
+                    error: function( xhr, status, errorThrown ) {
+                        alert( "Sorry, there was a problem!" );
+                        console.log( "Error: " + errorThrown );
+                        console.log( "Status: " + status );
+                        console.dir( xhr );
+                    },
+                    complete: function( xhr, status ) {
+                        console.log( "The request is complete!" );
+                    }
+                });
+            }
+
+            function aftersend(response) {
+                console.log(response);
+                document.getElementById('theform').reset();
+                checknew();
+            }
+
+            function sendchat() {
+                formstring = 'user=' + usernum;
+                formstring += '&input=' + document.getElementById('input').value;
+                $.post( "newchat", formstring, aftersend, 'html');
+                console.log(formstring);
+            }
+
+            $( document ).ready(function() {
+                lastUpdate = Date.now();
+                console.log( "Time is " + lastUpdate);
+                usernum = {{ usernames_length }};
+                setInterval(checknew, 2500);
+            });            
+        </script>
+    </body>
+</html>

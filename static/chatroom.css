@@ -1,0 +1,127 @@
+html {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    background-color: #cbcbcb;
+    font-family: "Helvetica-Neue", sans-serif;
+    padding: 0px 10px;
+    margin: 0;
+    height: 100%
+}
+
+.header {
+    left: 0;
+    top: 0;
+    overflow-y: scroll;
+    position: absolute;
+    width: 100%;
+    padding-bottom: 30px;
+    border-bottom: 3px solid #4e4e4e;
+    background-color: #cbcbcb;
+    height: 110px;
+}
+
+.header h1 {
+    font-size: 44px;
+    color: #494d58;
+    line-height: 100%;
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+
+.header h3 {
+    font-size: 18px;
+    color: #6a7081;
+    margin-top: 8px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    line-height: 100%;
+}
+
+.header p, .footer p {
+    font-size: 14px;
+    color: #6a7081;
+    line-height: 100%;
+    margin-top: 8px;
+}
+
+.chatbox {
+    left: 0;
+    bottom: 0;
+    top: 140px;
+    width: 100%;
+    font-size: 16px;
+    overflow-y: scroll;
+    position: absolute;
+}
+
+.monologue {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.username {
+    font-weight: bold;
+    margin-right: 5px;
+    font-size: 16px;
+    margin: 10px 5px 0px 0px;
+    display: inline;
+}
+
+.usertext {
+    display: inline;
+}
+
+.usertext p {
+    display: inline;
+    margin-bottom: 3px;
+}
+
+.usertext p~p {
+    display: block;
+    margin-top: 6px;
+}
+
+.footer {
+    height: 60px;
+    bottom: 0;
+    left: 0;
+    margin-top: 10px;
+    position: fixed;
+    overflow: hidden;
+    width: 100%;
+    background-color: #cbcbcb;
+}
+
+.inputrow {
+    border-top: 3px solid #4e4e4e;
+}
+
+.inputbox {
+    width: 600px;
+    font-size: 16px;
+    background-color: #f4f4f4;
+    color: #363636;
+}
+
+button {
+    background-color: #74b169;
+    border: none;
+}
+
+button:hover {
+    background-color: #a3fd93;
+}
+
+button:active {
+    background-color: #245f5d;
+}
+
+.submitbutton {
+    font-size: 16px;
+    color: #1f2446;
+}
