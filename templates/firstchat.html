@@ -17,7 +17,7 @@
         <div class='footer'>
             <div class='inputrow'>
                 <form id='theform'>
-                    <input class='inputbox' id='input' type='text' name='input' placeholder='Would that thou sing thy songs right here'>
+                    <input class='inputbox' id='input' type='text' name='input' placeholder='Would that thou sing thy songs right here' autofocus>
                     <button type='button' name='submit' onclick='sendchat()'>
                         <div class='submitbutton'>Zounds!</div>
                     </button>
@@ -38,6 +38,11 @@
             else {
                 console.log( "Date.now found!" );
             }
+
+            $('#theform').submit(function(e) {
+                e.preventDefault();
+                sendchat();
+            })
 
             function addChat( chats ) {
                 if (chats.length > 0){

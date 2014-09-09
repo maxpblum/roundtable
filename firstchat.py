@@ -1,6 +1,7 @@
 from flask import Flask, render_template, url_for, request, json
 import datetime
 import random
+import string
 
 chatapp = Flask(__name__)
 lastuser = ''
@@ -11,9 +12,37 @@ firsts = ['When', 'Wen', 'Ev', 'Dun', 'Flum', 'Flun', 'Floun', 'Durn']
 seconds = ['del', 'ding', 'ber', 'den', 'ber', 'sing']
 thirds = ['ton', 'don', 'buns', 'bin', 'ren', 'ren']
 
+befores = ['Forsooth', 'By my troth', 'Sirrah']
+afters = ['my liege', 'my lady', 'my lord', "i' faith", 'I pray thee']
+exclamations = ['How now, how now, mad wag!', "'Zounds!", 'O rare!', 'I care not.', 'Anon, anon.', 'Good morrow!', 'What, ho!']
+
 def makename():
 	return '%s%s%s %s%s%s'%(random.choice(firsts), random.choice(seconds), random.choice(thirds), \
 		random.choice(firsts), random.choice(seconds), random.choice(thirds))
+
+def checkuser(num):
+	global chats
+	if num >= len(usernames):
+		usernames.append((makename(), len(chats)))
+
+def findLastNonPunct(text):
+    i = len(text) - 1
+    while i >= 0:
+        if text[i] in (string.ascii_letters + string.digits):
+            return i
+        i -= 1
+    return i
+
+def knight_convert(speech):
+	if speech == '':
+		return random.choice(exclamations)
+	s = findLastNonPunct(speech)
+	if s == -1:
+		return speech
+	elif random.randint(0, 2) == 0:
+		return '%s, %s%s'%(speech[:(s+1)], random.choice(afters), speech[s+1:])
+	else:
+		return random.choice(befores) + ', ' + speech
 
 @chatapp.route('/roundtable')
 def roundtable():
@@ -21,10 +50,8 @@ def roundtable():
 
 @chatapp.route('/getnew',methods=['POST'])
 def givestuff():
-	global chats
 	usernum = int(request.form['user'])
-	if usernum >= len(usernames):
-		usernames.append((makename(), 0))
+	checkuser(usernum)
 	toreturn = chats[usernames[usernum][1]:]
 	usernames[usernum] = (usernames[usernum][0], len(chats))
 	return toreturn
@@ -33,11 +60,10 @@ def givestuff():
 def getstuff():
 	global chats
 	usernum = int(request.form['user'])
-	if usernum >= len(usernames):
-		usernames.append((makename(), 0))
-	chats += '%s\t%s\n'%(usernames[usernum][0], request.form['input'])
+	checkuser(usernum)
+	chats += '%s\t%s\n'%(usernames[usernum][0], knight_convert(request.form['input']))
 	return str(datetime)
 
 if __name__ == '__main__':
-	chatapp.run(debug=True);
+	chatapp.run(host='0.0.0.0');
 

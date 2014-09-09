@@ -13,7 +13,7 @@ body {
 }
 
 .header {
-    left: 0;
+    left: 5px;
     top: 0;
     overflow-y: scroll;
     position: absolute;
@@ -49,7 +49,7 @@ body {
 }
 
 .chatbox {
-    left: 0;
+    left: 5px;
     bottom: 55px;
     top: 140px;
     width: 100%;
@@ -88,7 +88,7 @@ body {
 .footer {
     height: 60px;
     bottom: 0;
-    left: 0;
+    left: 5px;
     margin-top: 40px;
     position: absolute;
     width: 100%;
