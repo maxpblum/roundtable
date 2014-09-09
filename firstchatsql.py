@@ -1,5 +1,5 @@
 from flask import Flask, render_template, url_for, request, json
-import datetime, random, string
+import datetime, random, string, sqlite3
 from BeautifulSoup import BeautifulSoup
 
 chatapp = Flask(__name__)
@@ -7,7 +7,8 @@ lastuser = ''
 chats = ''
 usernames = []
 
-
+chatdb = sqlite.connect('data/chats.db')
+cur = chatdb.cursor()
 
 firsts = ['When', 'Wen', 'Ev', 'Dun', 'Flum', 'Flun', 'Floun', 'Durn']
 seconds = ['del', 'ding', 'ber', 'den', 'ber', 'sing']
