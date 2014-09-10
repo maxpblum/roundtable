@@ -1,6 +1,6 @@
 from flask import Flask, render_template, url_for, request, json
 import datetime, random, string
-from BeautifulSoup import BeautifulSoup
+from bs4 import BeautifulSoup
 
 chatapp = Flask(__name__)
 lastuser = ''
@@ -17,7 +17,7 @@ befores = ['Forsooth', 'By my troth', 'Sirrah']
 afters = ['my liege', 'my lady', 'my lord', "i' faith", 'I pray thee']
 exclamations = ['How now, how now, mad wag!', "'Zounds!", 'O rare!', 'I care not.', 'Anon, anon.', 'Good morrow!', 'What, ho!']
 
-VALID_TAGS = ['strong', 'em', 'p', 'ul', 'li', 'br']
+VALID_TAGS = ['strong', 'em', 'p', 'ul', 'li', 'br', 'b', 'i']
 
 def sanitize_html(value):
 

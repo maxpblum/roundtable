@@ -48,7 +48,7 @@
                 if (chats.length > 0){
                     var allchats = [];
                     var chathtml = $('div.chatbox').html();
-                    var chatsplit = chats.split('\n').slice(0, -1);
+                    var chatsplit = chats.split('\n');
                     for (var c in chatsplit) {
                         var thepush = chatsplit[c].split('\t');
                         allchats.push(thepush);
@@ -107,7 +107,7 @@
             $( document ).ready(function() {
                 lastUpdate = Date.now();
                 console.log( "Time is " + lastUpdate);
-                usernum = {{ usernames_length }};
+                usernum = {{ newusernum }};
                 setInterval(checknew, 2500);
             });            
         </script>
