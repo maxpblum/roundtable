@@ -1,11 +1,8 @@
-from flask import Flask, render_template, url_for, request, json
-import time, datetime, random, string, sqlite3
+from flask import Flask, render_template, url_for, request
+import datetime, random, string, sqlite3
 from bs4 import BeautifulSoup
 
 chatapp = Flask(__name__)
-lastuser = ''
-chats = ''
-usernames = []
 
 firsts = ['When', 'Wen', 'Ev', 'Dun', 'Flum', 'Flun', 'Floun', 'Durn']
 seconds = ['del', 'ding', 'ber', 'den', 'ber', 'sing']
