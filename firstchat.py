@@ -80,5 +80,5 @@ def getstuff():
 	return str(datetime)
 
 if __name__ == '__main__':
-	chatapp.run(host='0.0.0.0');
+	chatapp.run(debug=True);
 
